@@ -1,0 +1,704 @@
+/* =========================================================
+   COLOR PALETTE
+   ========================================================= */
+
+:root {
+    --cream: #E3DBD3;
+    --sage: #9CB2A5;
+    --blue-gray: #8BA4B3;
+    --lavender: #C8B7C9;
+    --dusty-rose: #9D7982;
+    --burgundy: #733236;
+
+    --white: #ffffff;
+    --dark: #3f3a3b;
+    --light-bg: #f8f5f3;
+    --border: #d8ccca;
+}
+
+/* ==========================================
+   SHOPpN LOGO
+   ========================================== */
+
+.logo-link {
+    display: block;
+    width: fit-content;
+    margin: 0 0 15px 0;
+    text-decoration: none;
+}
+
+.site-logo {
+    display: block;
+    width: 180px;
+    height: auto;
+}
+
+.logo-link:hover {
+    text-decoration: none;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: var(--light-bg);
+    color: var(--dark);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    width: 100%;
+
+    background-color: var(--burgundy);
+    color: var(--white);
+
+    padding: 22px 40px;
+
+    box-shadow: 0 3px 12px rgba(115, 50, 54, 0.18);
+}
+
+
+/* ShopN logo/name */
+
+header h1 {
+    max-width: 1200px;
+
+    margin: 0 auto 18px auto;
+
+    font-size: 38px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto 18px auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    position: relative;
+}
+
+
+/* Navigation links */
+
+nav a {
+    color: var(--white);
+
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--cream);
+}
+
+
+/* Welcome text */
+
+nav span {
+    color: var(--cream);
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   MOVE REGISTER + LOGIN TO RIGHT
+   ========================================================= */
+
+/*
+   When logged out:
+   Home = first link
+   Register = second link
+   Login = third link
+*/
+
+nav a:nth-of-type(2) {
+    margin-left: auto;
+}
+
+nav a:nth-of-type(3) {
+    margin-left: 0;
+}
+
+
+/* =========================================================
+   SEARCH BAR
+   ========================================================= */
+
+header>form {
+    width: 100%;
+    max-width: 750px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+header>form input {
+    flex: 1;
+
+    width: auto;
+    max-width: none;
+
+    padding: 13px 16px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-size: 16px;
+
+    background-color: var(--white);
+}
+
+
+header>form input:focus {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 164, 179, 0.30);
+}
+
+
+header>form button {
+    padding: 13px 25px;
+
+    background-color: var(--sage);
+
+    color: var(--dark);
+
+    border-radius: 7px;
+}
+
+
+header>form button:hover {
+    background-color: var(--blue-gray);
+
+    color: var(--white);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+main {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 50px auto;
+
+    padding: 0 25px;
+}
+
+
+/* =========================================================
+   ALL PAGE TITLES
+   ========================================================= */
+
+main h2 {
+    width: 100%;
+    max-width: 650px;
+
+    margin: 0 auto 30px auto;
+
+    color: var(--burgundy);
+
+    font-size: 32px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   GENERAL PARAGRAPHS
+   ========================================================= */
+
+main>p {
+    max-width: 650px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ALL FORMS
+   ========================================================= */
+
+main>form {
+    width: 100%;
+    max-width: 650px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+    width: 100%;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--burgundy);
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+select {
+    width: 100%;
+    max-width: none;
+
+    padding: 13px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    background-color: var(--white);
+
+    color: var(--dark);
+
+    font-size: 15px;
+}
+
+
+input:focus,
+select:focus {
+    outline: none;
+
+    border-color: var(--blue-gray);
+
+    box-shadow:
+        0 0 0 3px rgba(139, 164, 179, 0.18);
+}
+
+
+/* =========================================================
+   PASSWORD FIELDS
+   ========================================================= */
+
+main form input[type="password"] {
+    width: calc(100% - 95px);
+
+    display: inline-block;
+}
+
+
+main form input[type="password"]+button {
+    width: 80px;
+
+    margin-left: 8px;
+
+    vertical-align: top;
+}
+
+
+/* =========================================================
+   ALL BUTTONS
+   ========================================================= */
+
+button {
+    padding: 12px 22px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background-color: var(--burgundy);
+
+    color: var(--white);
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+button:hover {
+    background-color: var(--dusty-rose);
+}
+
+
+/* =========================================================
+   SHOW / HIDE BUTTON
+   ========================================================= */
+
+main form button[type="button"] {
+    background-color: var(--blue-gray);
+
+    color: var(--white);
+}
+
+
+main form button[type="button"]:hover {
+    background-color: var(--dusty-rose);
+}
+
+
+/* =========================================================
+   CENTER SUBMIT BUTTONS
+   ========================================================= */
+
+main form>button[type="submit"] {
+    display: block;
+
+    margin: 15px auto 0 auto;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color: var(--burgundy);
+}
+
+
+a:hover {
+    color: var(--dusty-rose);
+}
+
+
+/* =========================================================
+   ACCOUNT PAGE
+   ========================================================= */
+
+.account-page {
+    max-width: 850px;
+}
+
+
+/* =========================================================
+   ACCOUNT CARD
+   ========================================================= */
+
+.account-card {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding: 35px;
+
+    background-color: var(--white);
+
+    border-radius: 12px;
+
+    border-top: 5px solid var(--sage);
+
+    box-shadow:
+        0 5px 18px rgba(115, 50, 54, 0.10);
+}
+
+
+.account-card h3 {
+    margin-top: 0;
+
+    color: var(--burgundy);
+
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTONS
+   ========================================================= */
+
+.account-actions {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+
+.account-button {
+    display: inline-block;
+
+    padding: 11px 18px;
+
+    background-color: var(--sage);
+
+    color: var(--dark);
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+}
+
+
+.account-button:hover {
+    background-color: var(--blue-gray);
+
+    color: var(--white);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.delete-button {
+    background-color: var(--burgundy);
+
+    color: var(--white);
+}
+
+
+.delete-button:hover {
+    background-color: var(--dusty-rose);
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.message {
+    width: 100%;
+    max-width: 650px;
+
+    margin: 0 auto 22px auto;
+
+    padding: 14px 18px;
+
+    border-radius: 7px;
+}
+
+
+.success-message {
+    background-color: #e7eee9;
+
+    color: #3d5d4c;
+
+    border-left: 5px solid var(--sage);
+}
+
+
+.error-message {
+    background-color: #f4e4e5;
+
+    color: var(--burgundy);
+
+    border-left: 5px solid var(--dusty-rose);
+}
+
+
+/* =========================================================
+   ACCOUNT PAGE LINKS
+   ========================================================= */
+
+.account-page>p {
+    text-align: center;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    width: 100%;
+
+    margin-top: 70px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    background-color: var(--burgundy);
+
+    color: var(--cream);
+}
+
+
+footer p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   HOME PAGE
+   ========================================================= */
+
+main h2+p {
+    text-align: center;
+}
+
+
+/* =========================================================
+   MOBILE DESIGN
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 20px;
+    }
+
+
+    header h1 {
+        text-align: center;
+
+        font-size: 30px;
+    }
+
+
+    nav {
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 12px;
+    }
+
+
+    /*
+       On small screens, don't force
+       Register/Login to the right.
+    */
+
+    nav a:nth-of-type(2) {
+        margin-left: 0;
+    }
+
+
+    header>form {
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+
+    header>form button {
+        width: 100%;
+    }
+
+
+    main {
+        width: 100%;
+
+        margin: 35px auto;
+
+        padding: 0 18px;
+    }
+
+
+    main h2 {
+        font-size: 28px;
+    }
+
+
+    main>form {
+        max-width: 100%;
+    }
+
+
+    .account-card {
+        padding: 25px 20px;
+    }
+
+
+    .account-actions {
+        flex-direction: column;
+    }
+
+
+    .account-button {
+        width: 100%;
+
+        text-align: center;
+    }
+
+
+    main form input[type="password"] {
+        width: 100%;
+
+        margin-bottom: 8px;
+    }
+
+
+    main form input[type="password"]+button {
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+}
