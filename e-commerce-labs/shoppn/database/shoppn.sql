@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2026 at 01:21 AM
+-- Generation Time: Oct 11, 2026 at 04:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,16 @@ CREATE TABLE `brands` (
   `brand_title` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`brand_id`, `brand_title`) VALUES
+(1, 'hiiu'),
+(6, 'hellolll'),
+(7, 'hii'),
+(8, 'hellolllk');
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +66,16 @@ CREATE TABLE `categories` (
   `cat_id` int(11) NOT NULL,
   `cat_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`cat_id`, `cat_name`) VALUES
+(1, 'Men Shoes'),
+(3, 'Shoes'),
+(4, 'Sho'),
+(5, 'Shoesfe');
 
 -- --------------------------------------------------------
 
@@ -82,8 +102,10 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_email`, `customer_pass`, `customer_country`, `customer_city`, `customer_contact`, `customer_image`, `user_role`, `reset_token`, `reset_expires`) VALUES
-(1, 'Ramatou', 'amidouramatou505@gmail.com', '$2y$10$ocPvdrHVj.jLW8tFEa5j5OFQg1CnAFx6Tgcx3xHhMi4u7W2PMOH0S', 'Burkina Faso', 'Ouagadougou', '+226234567788', '', 2, '4d53dfd6958a4d45e9dc87e85b614197ca4b50d6c66c6670e1b2ef72c9eea422', '2026-09-27 23:18:58'),
-(2, 'Ramatou AMIDOU', 'amidouramatou503@gmail.com', '$2y$10$CbOH7xLXLvButdn6ykpb1ObMtVNTqmGkD2pzMhzTmVkqV63LjPneS', 'Senegal', 'Dakar', '+22142559222', '', 2, NULL, NULL);
+(1, 'Ramatou', 'amidouramatou505@gmail.com', '$2y$10$ocPvdrHVj.jLW8tFEa5j5OFQg1CnAFx6Tgcx3xHhMi4u7W2PMOH0S', 'Burkina Faso', 'Ouagadougou', '+226234567788', '', 2, '37046154ed363595c4e6e071e6b1eab104bd1d2bc23decac8fe6085ca021ed65', '2026-10-04 21:10:50'),
+(2, 'Ramatou AMIDOU', 'amidouramatou503@gmail.com', '$2y$10$CbOH7xLXLvButdn6ykpb1ObMtVNTqmGkD2pzMhzTmVkqV63LjPneS', 'Senegal', 'Dakar', '+22142559222', '', 2, NULL, NULL),
+(3, 'Ramatou AMIDOU', 'amidouramatou501@gmail.com', '$2y$10$EF6gkwPxto.B0L.AKwfYEuPvSwq546J0HfPuXfLYT9Zu.B6bhDDze', 'Togo', 'Lome', '+22842559222', '', 2, NULL, NULL),
+(5, 'Admin', 'Admin1@gmail.com', '$2y$10$/gxtyWKakj/ha51aIRPMKeTXCOoHyuYTEsRK//Xb81F4PzlfvKJX.', 'Ghana', 'Accra', '+233539065214', '', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -101,6 +123,14 @@ CREATE TABLE `products` (
   `product_image` varchar(255) NOT NULL,
   `product_keywords` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_desc`, `product_image`, `product_keywords`) VALUES
+(1, 1, 1, 'rma', 20.00, 'ttttttttt', 'product_6aca347eb00072.56227696.png', 'shoes'),
+(3, 4, 7, 'iii', 50.00, 'oooooo', 'product_6aca357d3fbfa8.12755564.jpg', 'fashion');
 
 --
 -- Indexes for dumped tables
@@ -145,7 +175,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -157,19 +187,19 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

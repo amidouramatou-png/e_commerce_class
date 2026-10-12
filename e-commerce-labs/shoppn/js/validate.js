@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-
     // ==========================================
     // GET ELEMENTS
     // ==========================================
@@ -43,6 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==========================================
+    // PASSWORD REQUIREMENT ELEMENTS
+    // ==========================================
+
+    const requirementLength =
+        document.getElementById("requirementLength");
+
+    const requirementUppercase =
+        document.getElementById("requirementUppercase");
+
+    const requirementLowercase =
+        document.getElementById("requirementLowercase");
+
+    const requirementNumber =
+        document.getElementById("requirementNumber");
+
+    const requirementSpecial =
+        document.getElementById("requirementSpecial");
+
+
+    // ==========================================
     // SHOW / HIDE PASSWORD
     // ==========================================
 
@@ -52,13 +71,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
             password.type = "text";
 
-            showPassword.textContent = "Hide";
+            showPassword.textContent = "🙈";
+
+            showPassword.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
 
         } else {
 
             password.type = "password";
 
-            showPassword.textContent = "Show";
+            showPassword.textContent = "👁";
+
+            showPassword.setAttribute(
+                "aria-label",
+                "Show password"
+            );
 
         }
 
@@ -69,48 +98,180 @@ document.addEventListener("DOMContentLoaded", function () {
     // SHOW / HIDE CONFIRM PASSWORD
     // ==========================================
 
-    showConfirmPassword.addEventListener("click", function () {
+    showConfirmPassword.addEventListener(
+        "click",
+        function () {
 
-        if (confirmPassword.type === "password") {
+            if (confirmPassword.type === "password") {
 
-            confirmPassword.type = "text";
+                confirmPassword.type = "text";
 
-            showConfirmPassword.textContent = "Hide";
+                showConfirmPassword.textContent =
+                    "🙈";
+
+                showConfirmPassword.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            } else {
+
+                confirmPassword.type = "password";
+
+                showConfirmPassword.textContent =
+                    "👁";
+
+                showConfirmPassword.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            }
+
+        }
+    );
+
+
+    // ==========================================
+    // CHECK PASSWORD REQUIREMENTS
+    // ==========================================
+
+    function checkPasswordRequirements(value) {
+
+        return {
+
+            length:
+                value.length >= 8,
+
+            uppercase:
+                /[A-Z]/.test(value),
+
+            lowercase:
+                /[a-z]/.test(value),
+
+            number:
+                /[0-9]/.test(value),
+
+            special:
+                /[^A-Za-z0-9]/.test(value)
+
+        };
+
+    }
+
+
+    // ==========================================
+    // UPDATE REQUIREMENT DISPLAY
+    // ==========================================
+
+    function updateRequirement(
+        element,
+        passed,
+        text
+    ) {
+
+        if (passed) {
+
+            element.textContent =
+                "✓ " + text;
 
         } else {
 
-            confirmPassword.type = "password";
-
-            showConfirmPassword.textContent = "Show";
+            element.textContent =
+                "○ " + text;
 
         }
 
-    });
+    }
 
 
     // ==========================================
     // PASSWORD STRENGTH
     // ==========================================
 
-    password.addEventListener("input", function () {
+    function checkPasswordStrength() {
 
-        const value = password.value;
+        const value =
+            password.value;
+
+        const requirements =
+            checkPasswordRequirements(value);
 
 
-        if (value.length === 0) {
+        // Update requirement list
+
+        updateRequirement(
+            requirementLength,
+            requirements.length,
+            "At least 8 characters"
+        );
+
+        updateRequirement(
+            requirementUppercase,
+            requirements.uppercase,
+            "1 uppercase letter"
+        );
+
+        updateRequirement(
+            requirementLowercase,
+            requirements.lowercase,
+            "1 lowercase letter"
+        );
+
+        updateRequirement(
+            requirementNumber,
+            requirements.number,
+            "1 number"
+        );
+
+        updateRequirement(
+            requirementSpecial,
+            requirements.special,
+            "1 special character"
+        );
+
+
+        // Count requirements
+
+        let score = 0;
+
+        if (requirements.length) {
+            score++;
+        }
+
+        if (requirements.uppercase) {
+            score++;
+        }
+
+        if (requirements.lowercase) {
+            score++;
+        }
+
+        if (requirements.number) {
+            score++;
+        }
+
+        if (requirements.special) {
+            score++;
+        }
+
+
+        // Display strength
+
+        if (value === "") {
 
             passwordStrength.textContent = "";
 
         }
 
-        else if (value.length < 6) {
+        else if (score <= 2) {
 
             passwordStrength.textContent =
                 "Weak password";
 
         }
 
-        else if (value.length < 10) {
+        else if (score < 5) {
 
             passwordStrength.textContent =
                 "Medium password";
@@ -125,20 +286,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
+        // Also check confirmation
+
         checkPasswordMatch();
 
-    });
+    }
+
+
+    // ==========================================
+    // PASSWORD INPUT
+    // ==========================================
+
+    password.addEventListener(
+        "input",
+        checkPasswordStrength
+    );
 
 
     // ==========================================
     // CONFIRM PASSWORD
     // ==========================================
 
-    confirmPassword.addEventListener("input", function () {
-
-        checkPasswordMatch();
-
-    });
+    confirmPassword.addEventListener(
+        "input",
+        checkPasswordMatch
+    );
 
 
     function checkPasswordMatch() {
@@ -147,21 +319,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
             passwordMatch.textContent = "";
 
+            return;
         }
 
-        else if (
-            password.value === confirmPassword.value
+
+        if (
+            password.value ===
+            confirmPassword.value
         ) {
 
             passwordMatch.textContent =
-                "Passwords match";
+                "✓ Passwords match";
 
-        }
-
-        else {
+        } else {
 
             passwordMatch.textContent =
-                "Passwords do not match";
+                "✕ Passwords do not match";
 
         }
 
@@ -253,64 +426,80 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    country.addEventListener("change", function () {
+    country.addEventListener(
+        "change",
+        function () {
 
-        const selectedCountry = country.value;
+            const selectedCountry =
+                country.value;
 
 
-        city.innerHTML = "";
+            // Clear cities
+
+            city.innerHTML = "";
 
 
-        if (selectedCountry === "") {
+            // No country selected
 
-            const option =
+            if (selectedCountry === "") {
+
+                const option =
+                    document.createElement("option");
+
+                option.value = "";
+
+                option.textContent =
+                    "Select Country First";
+
+                city.appendChild(option);
+
+                city.disabled = true;
+
+                countryCode.value = "";
+
+                return;
+            }
+
+
+            // Default city
+
+            const defaultOption =
                 document.createElement("option");
 
-            option.value = "";
+            defaultOption.value = "";
 
-            option.textContent =
-                "Select Country First";
+            defaultOption.textContent =
+                "Select City";
 
-            city.appendChild(option);
+            city.appendChild(defaultOption);
 
-            city.disabled = true;
 
-            return;
+            // Get cities
+
+            const countryCities =
+                cities[selectedCountry];
+
+
+            countryCities.forEach(
+                function (cityName) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = cityName;
+
+                    option.textContent = cityName;
+
+                    city.appendChild(option);
+
+                }
+            );
+
+
+            city.disabled = false;
+
         }
-
-
-        const defaultOption =
-            document.createElement("option");
-
-        defaultOption.value = "";
-
-        defaultOption.textContent =
-            "Select City";
-
-        city.appendChild(defaultOption);
-
-
-        const countryCities =
-            cities[selectedCountry];
-
-
-        countryCities.forEach(function (cityName) {
-
-            const option =
-                document.createElement("option");
-
-            option.value = cityName;
-
-            option.textContent = cityName;
-
-            city.appendChild(option);
-
-        });
-
-
-        city.disabled = false;
-
-    });
+    );
 
 
     // ==========================================
@@ -340,71 +529,183 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    country.addEventListener("change", function () {
+    country.addEventListener(
+        "change",
+        function () {
 
-        const selectedCountry =
-            country.value;
+            const selectedCountry =
+                country.value;
 
-        if (phoneCodes[selectedCountry]) {
 
-            countryCode.value =
-                phoneCodes[selectedCountry];
+            if (phoneCodes[selectedCountry]) {
 
-        } else {
+                countryCode.value =
+                    phoneCodes[selectedCountry];
 
-            countryCode.value = "";
+            } else {
+
+                countryCode.value = "";
+
+            }
 
         }
-
-    });
+    );
 
 
     // ==========================================
     // REGISTER FORM
     // ==========================================
 
-    registerForm.addEventListener("submit", function (event) {
+    registerForm.addEventListener(
+        "submit",
+        function (event) {
+
+            const requirements =
+                checkPasswordRequirements(
+                    password.value
+                );
 
 
-        // Check passwords
+            // ----------------------------------
+            // CHECK STRONG PASSWORD
+            // ----------------------------------
 
-        if (
-            password.value !== confirmPassword.value
-        ) {
+            const strongPassword =
+                requirements.length &&
+                requirements.uppercase &&
+                requirements.lowercase &&
+                requirements.number &&
+                requirements.special;
 
-            event.preventDefault();
 
-            passwordMatch.textContent =
-                "Passwords do not match";
+            if (!strongPassword) {
 
-            alert(
-                "Please make sure both passwords are the same."
-            );
+                event.preventDefault();
 
-            return;
+                passwordStrength.textContent =
+                    "Password must meet all requirements.";
+
+                alert(
+                    "Please create a strong password using 8+ characters, uppercase, lowercase, number and special character."
+                );
+
+                password.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CHECK PASSWORD MATCH
+            // ----------------------------------
+
+            if (
+                password.value !==
+                confirmPassword.value
+            ) {
+
+                event.preventDefault();
+
+                passwordMatch.textContent =
+                    "✕ Passwords do not match";
+
+                alert(
+                    "Please make sure both passwords are the same."
+                );
+
+                confirmPassword.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CHECK COUNTRY
+            // ----------------------------------
+
+            if (country.value === "") {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select your country."
+                );
+
+                country.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CHECK CITY
+            // ----------------------------------
+
+            if (city.value === "") {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select your city."
+                );
+
+                city.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CHECK PHONE NUMBER
+            // ----------------------------------
+
+            if (
+                phoneNumber.value.trim() === ""
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please enter your phone number."
+                );
+
+                phoneNumber.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // CHECK PHONE NUMBER FORMAT
+            // ----------------------------------
+
+            if (
+                !/^[0-9]{7,15}$/.test(
+                    phoneNumber.value.trim()
+                )
+            ) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please enter a valid phone number."
+                );
+
+                phoneNumber.focus();
+
+                return;
+            }
+
+
+            // ----------------------------------
+            // COMBINE PHONE CODE + NUMBER
+            // ----------------------------------
+
+            contact.value =
+                countryCode.value +
+                phoneNumber.value.trim();
+
         }
-
-
-        // Check phone number
-
-        if (phoneNumber.value.trim() === "") {
-
-            event.preventDefault();
-
-            alert(
-                "Please enter your phone number."
-            );
-
-            return;
-        }
-
-
-        // Combine country code + phone number
-
-        contact.value =
-            countryCode.value +
-            phoneNumber.value.trim();
-
-    });
+    );
 
 });

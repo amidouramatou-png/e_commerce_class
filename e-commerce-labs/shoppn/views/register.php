@@ -39,11 +39,13 @@ require_once 'layout/header.php';
 
         <!-- NAME -->
 
-        <label>Name:</label><br>
+        <label for="name">Name:</label>
+        <br>
 
         <input
             type="text"
             name="name"
+            id="name"
             required
         >
 
@@ -52,11 +54,13 @@ require_once 'layout/header.php';
 
         <!-- EMAIL -->
 
-        <label>Email:</label><br>
+        <label for="email">Email:</label>
+        <br>
 
         <input
             type="email"
             name="email"
+            id="email"
             required
         >
 
@@ -65,23 +69,61 @@ require_once 'layout/header.php';
 
         <!-- PASSWORD -->
 
-        <label>Password:</label><br>
-
-        <input
-            type="password"
-            name="password"
-            id="password"
-            required
-        >
-
-        <button
-            type="button"
-            id="showPassword"
-        >
-            Show
-        </button>
-
+        <label for="password">Password:</label>
         <br>
+
+        <div class="password-input-wrapper">
+
+            <input
+                type="password"
+                name="password"
+                id="password"
+                required
+            >
+
+            <button
+                type="button"
+                id="showPassword"
+                class="password-eye"
+                aria-label="Show password"
+                title="Show password"
+            >
+                👁
+            </button>
+
+        </div>
+
+
+        <!-- PASSWORD REQUIREMENTS -->
+
+        <div class="password-requirements">
+
+            <p>Password must contain:</p>
+
+            <div id="requirementLength">
+                ○ At least 8 characters
+            </div>
+
+            <div id="requirementUppercase">
+                ○ 1 uppercase letter
+            </div>
+
+            <div id="requirementLowercase">
+                ○ 1 lowercase letter
+            </div>
+
+            <div id="requirementNumber">
+                ○ 1 number
+            </div>
+
+            <div id="requirementSpecial">
+                ○ 1 special character
+            </div>
+
+        </div>
+
+
+        <!-- PASSWORD STRENGTH -->
 
         <small id="passwordStrength"></small>
 
@@ -90,23 +132,35 @@ require_once 'layout/header.php';
 
         <!-- CONFIRM PASSWORD -->
 
-        <label>Confirm Password:</label><br>
-
-        <input
-            type="password"
-            name="confirm_password"
-            id="confirm_password"
-            required
-        >
-
-        <button
-            type="button"
-            id="showConfirmPassword"
-        >
-            Show
-        </button>
+        <label for="confirm_password">
+            Confirm Password:
+        </label>
 
         <br>
+
+        <div class="password-input-wrapper">
+
+            <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                required
+            >
+
+            <button
+                type="button"
+                id="showConfirmPassword"
+                class="password-eye"
+                aria-label="Show password"
+                title="Show password"
+            >
+                👁
+            </button>
+
+        </div>
+
+
+        <!-- PASSWORD MATCH -->
 
         <small id="passwordMatch"></small>
 
@@ -115,7 +169,11 @@ require_once 'layout/header.php';
 
         <!-- COUNTRY -->
 
-        <label>Country:</label><br>
+        <label for="country">
+            Country:
+        </label>
+
+        <br>
 
         <select
             name="country"
@@ -170,7 +228,11 @@ require_once 'layout/header.php';
 
         <!-- CITY -->
 
-        <label>City:</label><br>
+        <label for="city">
+            City:
+        </label>
+
+        <br>
 
         <select
             name="city"
@@ -190,7 +252,11 @@ require_once 'layout/header.php';
 
         <!-- CONTACT -->
 
-        <label>Contact:</label><br>
+        <label for="countryCode">
+            Contact:
+        </label>
+
+        <br>
 
         <select
             id="countryCode"

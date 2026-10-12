@@ -1,7 +1,7 @@
 <?php
 
-require_once '../core/core.php';
-require_once '../controllers/CustomerController.php';
+require_once __DIR__ . '/../core/core.php';
+require_once __DIR__ . '/../controllers/CustomerController.php';
 
 
 // ==========================================
@@ -84,8 +84,21 @@ if (
         $result['user_role'];
 
 
-    redirect('../index.php');
+    // ==========================================
+    // REDIRECT BASED ON USER ROLE
+    // ==========================================
 
+    $role = $result['user_role'] ?? null;
+
+    // Admin goes to the Admin Dashboard.
+    if ((int) $role === 1) {
+
+        redirect('../views/admin/dashboard.php');
+
+    }
+
+    // Customers go to the ShopN homepage.
+    redirect('../index.php');
 }
 
 

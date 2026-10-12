@@ -1,7 +1,7 @@
 <?php
 
-require_once 'core/core.php';
+require_once __DIR__ . '/core/core.php';
 
-require_once 'views/home.php';
+require_once __DIR__ . '/views/home.php';
 
 ?>
