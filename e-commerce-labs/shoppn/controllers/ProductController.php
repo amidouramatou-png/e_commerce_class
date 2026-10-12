@@ -96,12 +96,10 @@ class ProductController
         );
     }
 
-
     public function getProductById($id)
     {
         return $this->productModel->getProductById($id);
     }
-
 
     public function updateProduct(
         $id,
@@ -125,16 +123,50 @@ class ProductController
         );
     }
 
-
     public function getAllProducts()
     {
         return $this->productModel->getAllProducts();
     }
 
-
     public function deleteProduct($id)
     {
         return $this->productModel->deleteProduct($id);
+    }
+
+
+    // =====================================
+    // TASK 10 — CUSTOMER PRODUCT DISPLAY
+    // =====================================
+
+    // Get featured products for the homepage.
+
+    public function getFeaturedProducts($limit = 6)
+    {
+        return $this->productModel->getFeaturedProducts($limit);
+    }
+
+
+    // Get products belonging to a category.
+
+    public function getProductsByCategory($cat_id)
+    {
+        return $this->productModel->getProductsByCategory($cat_id);
+    }
+
+
+    // Get products belonging to a brand.
+
+    public function getProductsByBrand($brand_id)
+    {
+        return $this->productModel->getProductsByBrand($brand_id);
+    }
+
+
+    // Search products by title or keywords.
+
+    public function searchProducts($query)
+    {
+        return $this->productModel->searchProducts($query);
     }
 }
 ?>

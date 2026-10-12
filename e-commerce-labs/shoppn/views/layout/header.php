@@ -1,3 +1,10 @@
+
+<?php
+
+require_once __DIR__ . '/../../core/core.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +21,7 @@
 
     <link
         rel="stylesheet"
-        href="/xampp/E_commerce_class/e-commerce-labs/shoppn/css/style.css?v=3"
+        href="/xampp/E_commerce_class/e-commerce-labs/shoppn/css/style.css?v=4"
     >
 
 </head>
@@ -58,7 +65,9 @@
 
                 Welcome
                 <?= htmlspecialchars(
-                    $_SESSION['customer_name'] ?? ''
+                    $_SESSION['customer_name'] ?? '',
+                    ENT_QUOTES,
+                    'UTF-8'
                 ) ?>
 
             </span>

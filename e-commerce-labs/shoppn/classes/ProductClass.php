@@ -4,7 +4,6 @@ require_once __DIR__ . '/../core/db_class.php';
 
 class ProductClass extends Database
 {
-
     // =====================================
     // BRAND METHODS
     // =====================================
@@ -24,7 +23,6 @@ class ProductClass extends Database
         $sql = "SELECT * FROM brands ORDER BY brand_id ASC";
 
         $result = $this->conn->query($sql);
-
         $brands = [];
 
         while ($row = $result->fetch_assoc()) {
@@ -89,7 +87,6 @@ class ProductClass extends Database
         $sql = "SELECT * FROM categories ORDER BY cat_name ASC";
 
         $result = $this->conn->query($sql);
-
         $categories = [];
 
         while ($row = $result->fetch_assoc()) {
@@ -180,6 +177,7 @@ class ProductClass extends Database
 
 
     // GET ONE PRODUCT BY ID
+    // Used by the admin edit form and Task 10 product details.
 
     public function getProductById($id)
     {
@@ -195,9 +193,7 @@ class ProductClass extends Database
                 WHERE p.product_id = ?";
 
         $stmt = $this->conn->prepare($sql);
-
         $stmt->bind_param("i", $id);
-
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -248,6 +244,7 @@ class ProductClass extends Database
 
 
     // GET ALL PRODUCTS
+    // Used by the admin product management page.
 
     public function getAllProducts()
     {
@@ -263,7 +260,6 @@ class ProductClass extends Database
                 ORDER BY p.product_id ASC";
 
         $result = $this->conn->query($sql);
-
         $products = [];
 
         while ($row = $result->fetch_assoc()) {
@@ -281,11 +277,160 @@ class ProductClass extends Database
         $sql = "DELETE FROM products WHERE product_id = ?";
 
         $stmt = $this->conn->prepare($sql);
-
         $stmt->bind_param("i", $id);
 
         return $stmt->execute();
     }
 
+
+    // =====================================
+    // TASK 10 — CUSTOMER PRODUCT DISPLAY
+    // =====================================
+
+    // 1. GET FEATURED PRODUCTS
+    // Returns up to six products for the homepage.
+
+    public function getFeaturedProducts($limit = 6)
+    {
+        $limit = (int) $limit;
+
+        if ($limit < 1) {
+            $limit = 6;
+        }
+
+        // LIMIT is bound as an integer.
+        $sql = "SELECT
+                    p.*,
+                    c.cat_name,
+                    b.brand_title
+                FROM products p
+                LEFT JOIN categories c
+                    ON p.product_cat = c.cat_id
+                LEFT JOIN brands b
+                    ON p.product_brand = b.brand_id
+                ORDER BY RAND()
+                LIMIT ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $products = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
+    }
+
+
+    // 2. GET PRODUCTS BY CATEGORY
+
+    public function getProductsByCategory($cat_id)
+    {
+        $sql = "SELECT
+                    p.*,
+                    c.cat_name,
+                    b.brand_title
+                FROM products p
+                LEFT JOIN categories c
+                    ON p.product_cat = c.cat_id
+                LEFT JOIN brands b
+                    ON p.product_brand = b.brand_id
+                WHERE p.product_cat = ?
+                ORDER BY p.product_title ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $cat_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $products = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
+    }
+
+
+    // 3. GET PRODUCTS BY BRAND
+
+    public function getProductsByBrand($brand_id)
+    {
+        $sql = "SELECT
+                    p.*,
+                    c.cat_name,
+                    b.brand_title
+                FROM products p
+                LEFT JOIN categories c
+                    ON p.product_cat = c.cat_id
+                LEFT JOIN brands b
+                    ON p.product_brand = b.brand_id
+                WHERE p.product_brand = ?
+                ORDER BY p.product_title ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $brand_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $products = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
+    }
+
+
+    // 4. SEARCH PRODUCTS BY TITLE OR KEYWORDS
+
+    public function searchProducts($query)
+    {
+        $query = trim($query);
+
+        if ($query === '') {
+            return [];
+        }
+
+        $searchTerm = '%' . $query . '%';
+
+        $sql = "SELECT
+                    p.*,
+                    c.cat_name,
+                    b.brand_title
+                FROM products p
+                LEFT JOIN categories c
+                    ON p.product_cat = c.cat_id
+                LEFT JOIN brands b
+                    ON p.product_brand = b.brand_id
+                WHERE p.product_title LIKE ?
+                   OR p.product_keywords LIKE ?
+                ORDER BY p.product_title ASC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bind_param(
+            "ss",
+            $searchTerm,
+            $searchTerm
+        );
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $products = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+
+        return $products;
+    }
 }
 ?>
