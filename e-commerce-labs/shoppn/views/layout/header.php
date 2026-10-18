@@ -2,7 +2,12 @@
 <?php
 
 require_once __DIR__ . '/../../core/core.php';
+require_once __DIR__ . '/../../controllers/CartController.php';
 
+$cartController = new CartController();
+$cartIp = get_ip();
+$cartCount = $cartController->getCartCount($cartIp);
+$cartTotal = $cartController->getCartTotal($cartIp);
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +26,7 @@ require_once __DIR__ . '/../../core/core.php';
 
     <link
         rel="stylesheet"
-        href="/xampp/E_commerce_class/e-commerce-labs/shoppn/css/style.css?v=4"
+        href="/xampp/E_commerce_class/e-commerce-labs/shoppn/css/style.css?v=5"
     >
 
 </head>
@@ -150,6 +155,20 @@ require_once __DIR__ . '/../../core/core.php';
         </button>
 
     </form>
+    <!-- SHOPPING CART SUMMARY -->
+    <div class="header-cart">
+        <a href="/xampp/E_commerce_Class/e-commerce-labs/shoppn/views/cart.php">
+            🛒 Shopping Cart
+        </a>
+
+        <span>
+            Items: <?= (int) $cartCount ?>
+        </span>
+
+        <span>
+            Total: GHS <?= number_format((float) $cartTotal, 2) ?>
+        </span>
+    </div>
 
 
 </header>
