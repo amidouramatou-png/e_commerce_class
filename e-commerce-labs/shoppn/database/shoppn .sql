@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2026 at 04:42 PM
+-- Generation Time: Nov 13, 2026 at 12:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -105,7 +105,79 @@ INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_email`, `custo
 (1, 'Ramatou', 'amidouramatou505@gmail.com', '$2y$10$ocPvdrHVj.jLW8tFEa5j5OFQg1CnAFx6Tgcx3xHhMi4u7W2PMOH0S', 'Burkina Faso', 'Ouagadougou', '+226234567788', '', 2, '37046154ed363595c4e6e071e6b1eab104bd1d2bc23decac8fe6085ca021ed65', '2026-10-04 21:10:50'),
 (2, 'Ramatou AMIDOU', 'amidouramatou503@gmail.com', '$2y$10$CbOH7xLXLvButdn6ykpb1ObMtVNTqmGkD2pzMhzTmVkqV63LjPneS', 'Senegal', 'Dakar', '+22142559222', '', 2, NULL, NULL),
 (3, 'Ramatou AMIDOU', 'amidouramatou501@gmail.com', '$2y$10$EF6gkwPxto.B0L.AKwfYEuPvSwq546J0HfPuXfLYT9Zu.B6bhDDze', 'Togo', 'Lome', '+22842559222', '', 2, NULL, NULL),
-(5, 'Admin', 'Admin1@gmail.com', '$2y$10$/gxtyWKakj/ha51aIRPMKeTXCOoHyuYTEsRK//Xb81F4PzlfvKJX.', 'Ghana', 'Accra', '+233539065214', '', 1, NULL, NULL);
+(5, 'Admin', 'Admin1@gmail.com', '$2y$10$/gxtyWKakj/ha51aIRPMKeTXCOoHyuYTEsRK//Xb81F4PzlfvKJX.', 'Ghana', 'Accra', '+233539065214', '', 1, NULL, NULL),
+(6, 'Ramatou Ramatou', 'Rahama@rahamascents.com', '$2y$10$TAi9FRziLHocXygTD0zUju0hXW9vNAeSYUc2L4N/Y7Koy7SNqiDXK', 'Burkina Faso', 'Ouagadougou', '+233223333444', '', 2, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderdetails`
+--
+
+CREATE TABLE `orderdetails` (
+  `orderdetail_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orderdetails`
+--
+
+INSERT INTO `orderdetails` (`orderdetail_id`, `order_id`, `product_id`, `qty`, `price`) VALUES
+(1, 1, 3, 5, 50.00),
+(2, 1, 1, 2, 20.00),
+(3, 2, 1, 1, 20.00),
+(4, 2, 3, 1, 50.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `invoice_no` int(11) NOT NULL,
+  `order_date` date NOT NULL,
+  `order_status` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `invoice_no`, `order_date`, `order_status`, `created_at`) VALUES
+(1, 6, 516608, '2026-11-13', 'paid', '2026-11-13 11:04:00'),
+(2, 6, 695489, '2026-11-13', 'paid', '2026-11-13 11:06:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `pay_id` int(11) NOT NULL,
+  `amt` decimal(10,2) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `currency` varchar(10) NOT NULL DEFAULT 'GHS',
+  `payment_date` date NOT NULL,
+  `paystack_reference` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`pay_id`, `amt`, `customer_id`, `order_id`, `currency`, `payment_date`, `paystack_reference`) VALUES
+(1, 290.00, 6, 1, 'GHS', '2026-11-13', 'T261046526399060'),
+(2, 70.00, 6, 2, 'GHS', '2026-11-13', 'T262845591702882');
 
 -- --------------------------------------------------------
 
@@ -162,6 +234,28 @@ ALTER TABLE `customer`
   ADD UNIQUE KEY `customer_email` (`customer_email`);
 
 --
+-- Indexes for table `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  ADD PRIMARY KEY (`orderdetail_id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`pay_id`),
+  ADD UNIQUE KEY `paystack_reference` (`paystack_reference`),
+  ADD KEY `order_id` (`order_id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -181,7 +275,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -193,13 +287,47 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `orderdetails`
+--
+ALTER TABLE `orderdetails`
+  ADD CONSTRAINT `fk_orderdetails_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `fk_payment_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

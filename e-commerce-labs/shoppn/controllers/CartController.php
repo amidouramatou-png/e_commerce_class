@@ -55,4 +55,32 @@ class CartController
     {
         return $this->cartModel->updateQty($product_id, $new_qty, $ip);
     }
+
+
+    // =====================================
+    // TASK 13 — PAYMENT AND ORDERS
+    // =====================================
+
+    // Save the paid cart as an order. Returns the new order_id or false.
+    public function processPayment($customer_id, $ip, $reference, $amount)
+    {
+        return $this->cartModel->processPayment(
+            $customer_id,
+            $ip,
+            $reference,
+            $amount
+        );
+    }
+
+    // Get an order and its products for the invoice page.
+    public function getOrderById($order_id, $customer_id = null)
+    {
+        return $this->cartModel->getOrderById($order_id, $customer_id);
+    }
+
+    // Check whether a Paystack payment has already been recorded.
+    public function getOrderIdByReference($reference)
+    {
+        return $this->cartModel->getOrderIdByReference($reference);
+    }
 }
